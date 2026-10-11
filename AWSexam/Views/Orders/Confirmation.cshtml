@@ -1,0 +1,16 @@
+@model AWSexam.Models.Order
+@{
+    ViewData["Title"] = "Замовлення прийнято";
+}
+<section class="page-section"><div class="container">
+    <div class="confirmation-panel">
+        <div class="confirmation-check">✓</div><div class="eyebrow"><span class="eyebrow-line"></span> NORTH / ГОТОВО</div>
+        <h1>Дякуємо.<br><em>Ми все отримали.</em></h1>
+        <p class="page-intro">Замовлення <strong>№@Model.Id</strong> успішно прийнято.</p>
+        <div class="confirmation-details"><div><span>Клієнт</span><strong>@Model.CustomerName</strong></div><div><span>Email</span><strong>@Model.CustomerEmail</strong></div><div><span>Телефон</span><strong>@Model.CustomerPhone</strong></div><div><span>Статус</span><strong>@Model.Status</strong></div></div>
+        <div class="confirmation-table"><div class="confirmation-table-head"><span>ТОВАР</span><span>КІЛЬКІСТЬ</span><span>СУМА</span></div>
+        @foreach (var item in Model.Items) { <div class="confirmation-table-row"><span>@item.Product?.Name <small>@item.UnitPrice.ToString("0.00") грн / шт.</small></span><span>@item.Quantity</span><strong>@((item.UnitPrice * item.Quantity).ToString("0.00")) грн</strong></div> }
+        <div class="confirmation-total"><span>Разом</span><strong>@Model.Total.ToString("0.00") грн</strong></div></div>
+        <a asp-controller="Products" asp-action="Index" class="btn btn-ink">Повернутися до каталогу <span>↗</span></a>
+    </div>
+</div></section>

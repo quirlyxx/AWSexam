@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] — NORTH / store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AWSexam.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="topline"><div class="container shell-top"><span>ТЕХНІКА ДЛЯ ТВОГО ЩОДНЯ</span><span class="topline-right"><span class="status-dot"></span> Працюємо онлайн · Доставка по Україні</span></div></div>
+    <header class="site-header">
+        <nav class="container navbar navbar-expand-lg">
+            <a class="navbar-brand brand" asp-controller="Home" asp-action="Index"><span class="brand-mark">N</span><span>NORTH<span class="brand-slash">/</span><small>STORE</small></span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-label="Відкрити меню"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <div class="navbar-nav nav-links mx-auto">
+                    <a class="nav-link" asp-controller="Products" asp-action="Index">Каталог</a>
+                    <a class="nav-link" asp-controller="Products" asp-action="Create">Додати товар</a>
+                </div>
+                <a class="cart-link" asp-controller="Cart" asp-action="Index"><span class="cart-symbol">↗</span> Кошик <span class="cart-arrow">→</span></a>
+            </div>
+        </nav>
+    </header>
+    <main role="main">@RenderBody()</main>
+    <footer class="site-footer"><div class="container footer-inner"><a class="brand footer-brand" asp-controller="Home" asp-action="Index"><span class="brand-mark">N</span><span>NORTH<span class="brand-slash">/</span><small>STORE</small></span></a><span>Менше зайвого. Більше потрібного.</span><span>© 2026 NORTH Store</span></div></footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

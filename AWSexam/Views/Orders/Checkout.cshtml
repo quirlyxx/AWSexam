@@ -1,0 +1,23 @@
+@model AWSexam.Models.CheckoutVm
+@{
+    ViewData["Title"] = "Оформлення замовлення";
+}
+<section class="page-section"><div class="container">
+    <a asp-controller="Cart" asp-action="Index" class="back-link">← <span>Повернутися до кошика</span></a>
+    <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> NORTH / ОСТАННІЙ КРОК</div><h1>Майже <em>готово.</em></h1><p class="page-intro">Залиш контакти, щоб ми могли підтвердити замовлення.</p></div></div>
+    <div class="checkout-grid">
+        <form asp-action="Checkout" method="post" class="create-form checkout-form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-4"><label asp-for="CustomerName" class="form-label">Ім'я та прізвище</label><input asp-for="CustomerName" class="form-control" placeholder="Як до тебе звертатися" /><span asp-validation-for="CustomerName" class="text-danger"></span></div>
+            <div class="mb-4"><label asp-for="Email" class="form-label">Email</label><input asp-for="Email" type="email" class="form-control" placeholder="name@example.com" /><span asp-validation-for="Email" class="text-danger"></span></div>
+            <div class="mb-4"><label asp-for="Phone" class="form-label">Телефон</label><input asp-for="Phone" class="form-control" placeholder="+380 ..." /><span asp-validation-for="Phone" class="text-danger"></span></div>
+            <button type="submit" class="btn btn-ink">Підтвердити замовлення <span>↗</span></button>
+        </form>
+        <aside class="order-review"><div class="eyebrow"><span class="eyebrow-line"></span> ТВОЄ ЗАМОВЛЕННЯ</div>
+            @foreach (var line in Model.Cart.Lines) { <div class="review-line"><div><strong>@line.Product.Name</strong><small>@line.Quantity шт. × @line.Product.Price.ToString("0.00") грн</small></div><span>@line.Subtotal.ToString("0.00") грн</span></div> }
+            <div class="summary-total"><span>Разом</span><strong>@Model.Cart.Total.ToString("0.00") <small>грн</small></strong></div>
+            <p class="summary-note">Після оформлення замовлення його деталі буде збережено.</p>
+        </aside>
+    </div>
+</div></section>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

@@ -1,0 +1,24 @@
+@model AWSexam.Models.ProductCardViewModel
+@{
+    ViewData["Title"] = Model.product.Name;
+}
+<section class="page-section detail-section"><div class="container">
+    <a asp-action="Index" class="back-link">← <span>Повернутися до каталогу</span></a>
+    <div class="detail-grid">
+        <div class="detail-image">
+            @if (Model.imageUrl != null) { <img src="@Model.imageUrl" alt="@Model.product.Name" /> }
+            else { <div class="no-image detail-no-image"><span>N<span>/</span></span><small>NO IMAGE AVAILABLE</small></div> }
+            <span class="detail-image-tag">NORTH OBJECT Nº @Model.product.Id.ToString("000")</span>
+        </div>
+        <div class="detail-info">
+            <div class="eyebrow"><span class="eyebrow-line"></span> @Model.product.Category</div>
+            <h1>@Model.product.Name</h1>
+            <div class="detail-price">@Model.product.Price.ToString("0.00") <span>грн</span></div>
+            <div class="detail-stock"><span class="stock-dot @(Model.product.Quantity > 0 ? "in-stock" : "out-stock")"></span>@(Model.product.Quantity > 0 ? $"Є в наявності · {Model.product.Quantity} шт." : "Наразі немає в наявності")</div>
+            @if (!string.IsNullOrWhiteSpace(Model.product.Description)) { <p class="detail-description">@Model.product.Description</p> }
+            <div class="detail-divider"></div>
+            @if (Model.product.Quantity > 0) { <form asp-controller="Cart" asp-action="Add" asp-route-id="@Model.product.Id" method="post"><button type="submit" class="btn btn-ink detail-add">Додати в кошик <span>↗</span></button></form> }
+            <div class="detail-footnote"><span>↗</span><p>Просто обирай те, що тобі справді потрібно.</p></div>
+        </div>
+    </div>
+</div></section>

@@ -1,0 +1,51 @@
+@model AWSexam.Models.ProductListVm
+@{
+    ViewData["Title"] = "Каталог";
+}
+<section class="page-section">
+    <div class="container">
+        <div class="page-heading">
+            <div><div class="eyebrow"><span class="eyebrow-line"></span> NORTH / КАТАЛОГ</div><h1>Знайди <em>своє.</em></h1><p class="page-intro">Практичні речі. Чесні ціни. Нічого зайвого.</p></div>
+            <a asp-action="Create" class="text-action">+ Додати товар <span>↗</span></a>
+        </div>
+        <div class="catalog-toolbar">
+            <span class="catalog-label">УСІ ТОВАРИ <span class="toolbar-line"></span></span>
+            <form method="get" class="filter-form">
+                <label for="category">Категорія</label>
+                <select id="category" name="category" class="form-select" onchange="this.form.submit()">
+                    <option value="">Усі категорії</option>
+                    @foreach (var c in Model.Categories) { <option value="@c" selected="@(c == Model.SelectedCategory)">@c</option> }
+                </select>
+                @if (!string.IsNullOrEmpty(Model.SelectedCategory)) { <a asp-action="Index" class="clear-filter">Скинути ×</a> }
+            </form>
+        </div>
+        @if (!Model.Items.Any())
+        {
+            <div class="empty-state"><span class="empty-icon">＋</span><h2>Поки що тут порожньо.</h2><p>Додай перший товар або зміни категорію.</p><a asp-action="Create" class="btn btn-ink">Додати товар <span>↗</span></a></div>
+        }
+        else
+        {
+            <div class="product-grid">
+            @foreach (var item in Model.Items)
+            {
+                <article class="product-card">
+                    <a asp-action="Details" asp-route-id="@item.product.Id" class="product-image-link">
+                        <div class="product-image">
+                        @if (item.imageUrl != null) { <img src="@item.imageUrl" alt="@item.product.Name" loading="lazy" /> }
+                        else { <div class="no-image"><span> N<span>/</span> </span><small>NO IMAGE AVAILABLE</small></div> }
+                        <span class="image-index">N°@item.product.Id.ToString("000")</span>
+                        </div>
+                    </a>
+                    <div class="product-meta"><span>@item.product.Category</span><span class="stock-dot @(item.product.Quantity > 0 ? "in-stock" : "out-stock")"></span></div>
+                    <a asp-action="Details" asp-route-id="@item.product.Id" class="product-name">@item.product.Name</a>
+                    <div class="product-bottom"><div><strong>@item.product.Price.ToString("0.00")</strong><small>грн</small></div>
+                    @if (item.product.Quantity > 0) { <form asp-controller="Cart" asp-action="Add" asp-route-id="@item.product.Id" method="post"><button type="submit" class="add-button" aria-label="Додати в кошик">＋</button></form> }
+                    else { <span class="sold-out">Немає</span> }
+                    </div>
+                    <div class="stock-caption">@(item.product.Quantity > 0 ? $"В наявності · {item.product.Quantity} шт." : "Наразі немає в наявності")</div>
+                </article>
+            }
+            </div>
+        }
+    </div>
+</section>
